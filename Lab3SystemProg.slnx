@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CCompiler.Cli/CCompiler.Cli.csproj" />
+    <Project Path="src/CCompiler.Web/CCompiler.Web.csproj" />
+    <Project Path="src/CCompiler/CCompiler.csproj" />
+    <Project Path="src/Theory/Theory.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CCompiler.Tests/CCompiler.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>c2js - транслятор підмножини C</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+</head>
+<body>
+<header>
+  <span class="title">c2js</span>
+  <span class="desc">транслятор підмножини C &rarr; JavaScript (GPLEX + GPPG, LALR(1))</span>
+  <nav>
+    <a href="/grammar/CParser.y" target="_blank">CParser.y</a>
+    <a href="/grammar/CLexer.lex" target="_blank">CLexer.lex</a>
+    <a href="/grammar/CParser.report.html" target="_blank">стани LALR(1)</a>
+  </nav>
+</header>
+
+<main>
+  <section class="pane left">
+    <div class="toolbar">
+      <label for="examples">Приклад</label>
+      <select id="examples"></select>
+      <span class="spacer"></span>
+      <label class="check"><input type="checkbox" id="traceToggle"> траса</label>
+      <button id="compileBtn" title="Ctrl+Enter">Компілювати</button>
+    </div>
+    <div class="editor">
+      <pre id="gutter" aria-hidden="true"></pre>
+      <div class="code-wrap">
+        <div id="lineMark"></div>
+        <textarea id="source" spellcheck="false" wrap="off"></textarea>
+      </div>
+    </div>
+    <div id="diagnostics"></div>
+  </section>
+
+  <section class="pane right">
+    <div class="tabs" role="tablist">
+      <button data-tab="ast" class="active">AST</button>
+      <button data-tab="tokens">Лексеми</button>
+      <button data-tab="trace">Траса</button>
+      <button data-tab="js">JavaScript</button>
+      <button data-tab="run">Виконання</button>
+    </div>
+
+    <div class="tab-body active" id="tab-ast">
+      <div class="subbar">
+        <button id="expandAll">розгорнути</button>
+        <button id="collapseDeep">згорнути до 3 рівня</button>
+        <button id="fitTree">вмістити</button>
+        <button id="saveSvg">зберегти SVG</button>
+        <div class="legend" id="legend"></div>
+      </div>
+      <div id="tree"><div class="placeholder">Дерево з'явиться після компіляції.</div></div>
+      <div id="tooltip" hidden></div>
+    </div>
+
+    <div class="tab-body" id="tab-tokens">
+      <div class="scroll"><table id="tokensTable"><thead><tr><th>#</th><th>позиція</th><th>лексема</th><th>текст</th></tr></thead><tbody></tbody></table></div>
+    </div>
+
+    <div class="tab-body" id="tab-trace">
+      <div class="subbar note">shift - перенесення лексеми в стек; reduce - згортка за правилом граматики. Потрібна позначка «траса».</div>
+      <div class="scroll"><pre id="traceOut"></pre></div>
+    </div>
+
+    <div class="tab-body" id="tab-js">
+      <div class="subbar"><button id="copyJs">копіювати</button><button id="saveJs">зберегти .js</button></div>
+      <div class="scroll"><pre id="jsOut" class="code"></pre></div>
+    </div>
+
+    <div class="tab-body" id="tab-run">
+      <div class="run-grid">
+        <div>
+          <div class="run-head">інтерпретатор AST (сервер, C#)</div>
+          <pre id="interpOut" class="console"></pre>
+          <div id="interpMeta" class="meta"></div>
+        </div>
+        <div>
+          <div class="run-head">згенерований JavaScript (браузер, Web Worker)</div>
+          <pre id="jsRunOut" class="console"></pre>
+          <div id="jsRunMeta" class="meta"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span id="grammarStats">граматика: -</span>
+  <span id="matchBadge"></span>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

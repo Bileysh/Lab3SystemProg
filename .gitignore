@@ -1,0 +1,16 @@
+bin/
+obj/
+.vs/
+*.user
+TestResults/
+
+# генерується GPPG/GPLEX під час збірки
+*.g.cs
+*.report.html
+*.conflicts
+sort.js
+.claude/
+*.lst
+
+# особисті нотатки
+DEFENSE_SCRIPT.md

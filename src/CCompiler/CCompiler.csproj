@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>CCompiler</RootNamespace>
+    <NoWarn>$(NoWarn);CS8600;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS0162;CS1591;CS3021;CS0108</NoWarn>
+    <DefineConstants>$(DefineConstants);EXPORT_GPPG</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="YaccLexTools" Version="1.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="CodeGen\runtime.js" LogicalName="CCompiler.CodeGen.runtime.js" />
+    <InternalsVisibleTo Include="CCompiler.Tests" />
+  </ItemGroup>
+
+  <ItemGroup Label="CParser">
+    <YaccFile Include="Parsing\CParser.y">
+      <OutputFile>Parsing\CParser.g.cs</OutputFile>
+      <Arguments>/gplex /nolines /report /verbose /conflicts</Arguments>
+    </YaccFile>
+    <LexFile Include="Parsing\CLexer.lex">
+      <OutputFile>Parsing\CLexer.g.cs</OutputFile>
+    </LexFile>
+  </ItemGroup>
+
+</Project>
